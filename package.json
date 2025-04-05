@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"@melloware/coloris": "^0.24.0",
-		"mongodb": "^6.15.0"
+		"mongodb": "^6.15.0",
+		"svelte-awesome-color-picker": "^4.0.1"
 	}
 }

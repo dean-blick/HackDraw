@@ -2,7 +2,9 @@
     import { onMount } from "svelte";
     import { Segment } from '@skeletonlabs/skeleton-svelte';
     import { draw } from "svelte/transition";
-    import ColorPicker from "../components/ColorPicker.svelte";
+    
+	import ColorPicker from 'svelte-awesome-color-picker';
+
 
     let size = $state('sm');
 
@@ -13,7 +15,7 @@
     let zoomSizes: Array<number> = $state([1, 2, 3, 4, 5])
     let zoomLevel: number = $state(0)
 
-    let colors: Array<string> = ["#FFFFFF","#000000","#FF0000","#00FF00","#0000FF"]
+    let colors: Array<string> = $state(["#FFFFFF","#000000","#FF0000","#00FF00","#0000FF"])
 
     async function GetPixels() {
         let response = await fetch('/')
@@ -31,6 +33,13 @@
     let activeColor: string = $state("#000000")
 
     async function sendPixel(i: number) {
+        if (activeColor in colors) {
+            console.log(colors)
+        } else {
+            colors.push(activeColor)
+            console.log(colors)
+        }
+
         pixels[Math.floor(i/100)][i % 100] = activeColor
         const response = await fetch('/', {
             method: 'POST',
@@ -59,7 +68,10 @@
 <svelte:window bind:innerWidth={width}/>
 <div class="flex flex-col lg:flex-row">
     <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[120px]">
-        <ColorPicker/>
+        <ColorPicker
+            bind:hex = {activeColor}
+        position="responsive"
+        />
         <Segment name="size" value={activeColor} onValueChange={(e) => (activeColor = e.value!)} orientation="vertical">
             {#each colors as color}
                 <Segment.Item value={color} ><div class="w-4 h-4" style="background-color: {color}"></div></Segment.Item>
