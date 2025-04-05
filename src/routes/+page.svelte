@@ -129,7 +129,7 @@
                 <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class={"p-1  " + (gridDisabled ? (" border-[1px] border-gray-300") : ("border-0"))} aria-label="pixel"></button>
             {/each}
         </div>
-        <div class="flex flex-col justify-center ml-10 overflow-scroll h-screen">
+        <div class="flex flex-col ml-10 overflow-scroll h-screen">
             <h1 class="card m-2 font-bold">Contributors: </h1>
             {#each contributors as item}
                 <div class="card bg-surface-300-700 m-3 py-1 px-2">{item}</div>
