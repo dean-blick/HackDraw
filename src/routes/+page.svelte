@@ -33,7 +33,7 @@
     let activeColor: string = $state("#000000")
 
     async function sendPixel(i: number) {
-        if (activeColor in colors) {
+        if (colors.includes(activeColor)) {
             console.log(colors)
         } else {
             colors.push(activeColor)
