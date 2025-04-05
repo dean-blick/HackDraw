@@ -14,6 +14,8 @@
     let zoomSizes: Array<number> = $state([1, 2, 3, 4, 5])
     let zoomLevel: number = $state(0)
 
+    let hasAgreed: boolean = $state(false)
+
     let colors: Array<string> = $state(["#FFFFFF","#000000","#FF0000","#00FF00","#0000FF"])
 
     async function GetPixels() {
@@ -49,12 +51,8 @@
         });
     }
 
-    function zoomIn() {
-        if (zoomLevel < 4) zoomLevel = zoomLevel + 1
-    }
-
-    function zoomOut() {
-        if (zoomLevel > 0) zoomLevel = zoomLevel - 1
+    function agree() {
+        hasAgreed = true;
     }
 
     onMount(() => {
@@ -66,26 +64,40 @@
 
 <svelte:window bind:innerWidth={width}/>
 
-{#if !isScreenLarge}
+
+{#if !hasAgreed}
+    <div class="flex flex-col justify-center items-center h-screen w-screen">
+        <div class="card w-1/6 mb-10">
+            By clicking the button below you agree to respect the contributions of others and to keep the art appropriate. Enjoy!
+        </div>
+        <button onclick={() => agree()} class="btn preset-filled-primary-500">
+            I Agree
+        </button>
+    </div>
+{/if}
+{#if !isScreenLarge && hasAgreed}
     <div class="h-screen w-screen absolute bg-surface-50-950">
         Please interact with this app on a larger screen, we are still working on mobile!
     </div>
 {/if}
-{#if isScreenLarge}
+{#if isScreenLarge && hasAgreed}
 
     <div class="flex flex-col lg:flex-row">
         <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[120px]">
-            <ColorPicker
-                bind:hex = {activeColor}
-            position="responsive"
-            />
+            <div class="w-full h-10 p-2 mb-4">
+                <ColorPicker
+                    bind:hex = {activeColor}
+                position="responsive"
+                />
+            </div>
             <Segment name="size" value={activeColor} onValueChange={(e) => (activeColor = e.value!)} orientation="vertical">
-                {#each colors as color}
-                    <Segment.Item value={color} ><div class="w-4 h-4" style="background-color: {color}"></div></Segment.Item>
-                {/each}
+                <div class="grid grid-cols-2">
+                    {#each colors as color}
+                        <Segment.Item value={color} ><div class="w-4 h-4" style="background-color: {color}"></div></Segment.Item>
+                    {/each}
+
+                </div>
             </Segment>
-            <button onclick={() => zoomIn()} disabled={zoomLevel == 4}>Zoom In</button>
-            <button onclick={() => zoomOut()} disabled={zoomLevel == 0}>Zoom Out</button>
         </div>
         <div class="grid grid-rows-100 grid-cols-100 h-screen w-1/2">
             {#each Array(10000) as _, i}
