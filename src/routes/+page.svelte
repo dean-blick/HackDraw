@@ -9,7 +9,7 @@
 
     let width: number = $state(0)
     let pixels: Array<Array<string>> = $state([[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],])
-    let isScreenLarge: boolean = $derived(width > 1023)
+    let isScreenLarge: boolean = $derived(width > 1024)
 
     let zoomSizes: Array<number> = $state([1, 2, 3, 4, 5])
     let zoomLevel: number = $state(0)
@@ -99,7 +99,7 @@
                 </div>
             </Segment>
         </div>
-        <div class="grid grid-rows-100 grid-cols-100 h-screen w-1/2">
+        <div class="grid grid-rows-100 grid-cols-100 h-screen w-200">
             {#each Array(10000) as _, i}
                 <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class="p-1 border-[1px] border-gray-300" aria-label="pixel"></button>
             {/each}
