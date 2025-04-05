@@ -6,6 +6,7 @@ import { canvasData } from "$lib/server/canvasData";
 
 
 export const load: PageServerLoad = async function() {
+    // canvasBackup.drop()
     // const backup = (await canvasData.find().toArray()).map(e => ({
     //     ...e
     // }))
@@ -15,6 +16,5 @@ export const load: PageServerLoad = async function() {
     const data = (await canvasInfo.find().toArray()).map(e => ({
         ...e
     }))
-    console.log(data)
     return {data: data[0].usernames}
 }

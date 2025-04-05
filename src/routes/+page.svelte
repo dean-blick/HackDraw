@@ -43,12 +43,12 @@
     let activeColor: string = $state("#000000")
 
     async function sendPixel(i: number) {
-        if (colors.includes(activeColor)) {
-            console.log(colors)
-        } else {
-            colors.push(activeColor)
-            console.log(colors)
-        }
+        // if (colors.includes(activeColor)) {
+        //     console.log(colors)
+        // } else {
+        //     colors.push(activeColor)
+        //     console.log(colors)
+        // }
 
         pixels[Math.floor(i/100)][i % 100] = activeColor
         const response = await fetch('/', {
@@ -107,6 +107,7 @@
             <div class="w-40 btn preset-filled-surface-500 z-10 m-1 self-center">
                 <ColorPicker
                     bind:hex = {activeColor}
+                    
                 position="responsive"
                 />
             </div>
@@ -128,7 +129,7 @@
                 <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class={"p-1  " + (gridDisabled ? (" border-[1px] border-gray-300") : ("border-0"))} aria-label="pixel"></button>
             {/each}
         </div>
-        <div class="flex flex-col justify-center ml-10 overflow-scroll">
+        <div class="flex flex-col justify-center ml-10 overflow-scroll h-screen">
             <h1 class="card m-2 font-bold">Contributors: </h1>
             {#each contributors as item}
                 <div class="card bg-surface-300-700 m-3 py-1 px-2">{item}</div>
