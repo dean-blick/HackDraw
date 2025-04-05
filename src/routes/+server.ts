@@ -23,7 +23,7 @@ export async function POST({request}): Promise<Response> {
     }))
     let infoData = info[0]
     let newUsers: Array<string> = infoData.usernames
-    if (!newUsers.includes(body.userName) && body.userName != "") {
+    if (!newUsers.includes(body.userName) && body.userName != null && body.userName != "") {
         newUsers.push(body.userName)
     }
     console.log(newUsers)
