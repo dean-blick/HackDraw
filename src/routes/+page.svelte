@@ -125,7 +125,7 @@
         </div>
         <div class="grid grid-rows-100 grid-cols-100 h-screen w-200">
             {#each Array(10000) as _, i}
-                <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class={"p-1  " + (gridDisabled ? ("border-0") : (" border-[1px] border-gray-300"))} aria-label="pixel"></button>
+                <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class={"p-1  " + (gridDisabled ? (" border-[1px] border-gray-300") : ("border-0"))} aria-label="pixel"></button>
             {/each}
         </div>
         <div class="flex flex-col justify-center ml-10 overflow-scroll">
