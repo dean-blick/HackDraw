@@ -17,6 +17,7 @@ export async function GET(): Promise<Response> {
 
 export async function POST({request}): Promise<Response> {
     let body = await request.json()
+    let reqUser: string = body.userName
 
     const info = (await canvasInfo.find().toArray()).map(e => ({
         ...e
@@ -24,7 +25,7 @@ export async function POST({request}): Promise<Response> {
     let infoData = info[0]
     let newUsers: Array<string> = infoData.usernames
     if (!newUsers.includes(body.userName) && body.userName != null && body.userName != "") {
-        newUsers.push(body.userName)
+        newUsers.push(reqUser.trim())
     }
     console.log(newUsers)
     canvasInfo.updateOne({"_id": ObjectId.createFromHexString('67f1887bfc15c7e9ea128c26')}, {$set: {usernames: newUsers}})
