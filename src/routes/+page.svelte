@@ -83,15 +83,15 @@
 {#if isScreenLarge && hasAgreed}
 
     <div class="flex flex-col lg:flex-row">
-        <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[120px]">
-            <div class="w-full h-10 p-2 mb-4">
+        <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[175px]">
+            <div class="w-40 btn preset-filled-surface-500 z-10 m-1 self-center">
                 <ColorPicker
                     bind:hex = {activeColor}
                 position="responsive"
                 />
             </div>
             <Segment name="size" value={activeColor} onValueChange={(e) => (activeColor = e.value!)} orientation="vertical">
-                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-3">
                     {#each colors as color}
                         <Segment.Item value={color} ><div class="w-4 h-4" style="background-color: {color}"></div></Segment.Item>
                     {/each}
