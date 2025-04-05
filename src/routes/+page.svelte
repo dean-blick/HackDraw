@@ -43,12 +43,9 @@
     let activeColor: string = $state("#000000")
 
     async function sendPixel(i: number) {
-        // if (colors.includes(activeColor)) {
-        //     console.log(colors)
-        // } else {
-        //     colors.push(activeColor)
-        //     console.log(colors)
-        // }
+        if (!colors.includes(activeColor)) {
+            colors.push(activeColor)
+        }
 
         pixels[Math.floor(i/100)][i % 100] = activeColor
         const response = await fetch('/', {

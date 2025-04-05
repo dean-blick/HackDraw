@@ -27,7 +27,6 @@ export async function POST({request}): Promise<Response> {
     if (!newUsers.includes(body.userName) && body.userName != null && body.userName != "") {
         newUsers.push(reqUser.trim())
     }
-    console.log(newUsers)
     canvasInfo.updateOne({"_id": ObjectId.createFromHexString('67f1887bfc15c7e9ea128c26')}, {$set: {usernames: newUsers}})
 
     if (body.type == "agree") {
