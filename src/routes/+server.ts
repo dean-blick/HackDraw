@@ -26,6 +26,7 @@ export async function POST({request}): Promise<Response> {
     const updateDoc = {
         $set: { pixels: newPixels },
     };
+    
     await canvasData.updateOne(filter, updateDoc)
 
     return new Response(JSON.stringify(data), {
