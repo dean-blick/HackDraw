@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { Segment } from '@skeletonlabs/skeleton-svelte';
     import { draw } from "svelte/transition";
+    import ColorPicker from "../components/ColorPicker.svelte";
 
     let size = $state('sm');
 
@@ -9,8 +10,10 @@
     let pixels: Array<Array<string>> = $state([[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],])
     let isScreenLarge: boolean = $derived(width > 1023)
 
-    let zoomSizes: Array<number> = $state([2, 3, 4, 5, 6])
+    let zoomSizes: Array<number> = $state([1, 2, 3, 4, 5])
     let zoomLevel: number = $state(0)
+
+    let colors: Array<string> = ["#FFFFFF","#000000","#FF0000","#00FF00","#0000FF"]
 
     async function GetPixels() {
         let response = await fetch('/')
@@ -52,20 +55,22 @@
 
 </script>
 
+
 <svelte:window bind:innerWidth={width}/>
 <div class="flex flex-col lg:flex-row">
     <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[120px]">
-        <Segment name="size" value={size} onValueChange={(e) => (size = e.value!)} orientation="vertical">
-            <Segment.Item value="sm">Small</Segment.Item>
-            <Segment.Item value="md">Medium</Segment.Item>
-            <Segment.Item value="lg">Large</Segment.Item>
+        <ColorPicker/>
+        <Segment name="size" value={activeColor} onValueChange={(e) => (activeColor = e.value!)} orientation="vertical">
+            {#each colors as color}
+                <Segment.Item value={color} ><div class="w-4 h-4" style="background-color: {color}"></div></Segment.Item>
+            {/each}
         </Segment>
         <button onclick={() => zoomIn()} disabled={zoomLevel == 4}>Zoom In</button>
         <button onclick={() => zoomOut()} disabled={zoomLevel == 0}>Zoom Out</button>
     </div>
-    <div class="grid grid-rows-100 grid-cols-100 h-screen w-1/2 overflow-scroll">
+    <div class="grid grid-rows-100 grid-cols-100 h-screen w-1/2">
         {#each Array(10000) as _, i}
-            <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class="w-{zoomSizes[zoomLevel]} h-{zoomSizes[zoomLevel]} border-[1px] border-gray-300" aria-label="pixel"></button>
+            <button onclick={() => sendPixel(i)} style="background-color: {pixels[Math.floor(i/100)][i % 100]}" class="p-1 border-[1px] border-gray-300" aria-label="pixel"></button>
         {/each}
     </div>
 </div>

@@ -25,6 +25,7 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
+		"@melloware/coloris": "^0.24.0",
 		"mongodb": "^6.15.0"
 	}
 }
