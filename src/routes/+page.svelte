@@ -1,12 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { Segment } from '@skeletonlabs/skeleton-svelte';
+    import pixelData from '../lib/pixels.json'
+    import names from '../lib/names.json'
     
 	import ColorPicker from 'svelte-awesome-color-picker';
 
     import type { PageData } from "./$types";
-
-    let { data }: { data: PageData } = $props();
 
     let size = $state('sm');
 
@@ -27,18 +27,7 @@
 
     let colors: Array<string> = $state(["#FFFFFF","#000000","#FF0000","#00FF00","#0000FF"])
 
-    async function GetPixels() {
-        let response = await fetch('/')
-        let data: Array<{index: number, pixels: Array<string>}> = await response.json()
-        let i = 0
-        data.forEach(element => {
-            pixels[i] = element.pixels
-            i = i + 1
-        });
-        await setTimeout(() => {
-            GetPixels()
-        }, 250);
-    }
+    
 
     let activeColor: string = $state("#000000")
 
@@ -48,30 +37,18 @@
         }
 
         pixels[Math.floor(i/100)][i % 100] = activeColor
-        const response = await fetch('/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',       
-            },
-            body: JSON.stringify({type: "pixel", index: i, color: activeColor}), 
-        });
     }
 
     async function agree() {
         hasAgreed = true;
-        const response = await fetch('/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',       
-            },
-            body: JSON.stringify({type: "agree", userName: userName}), 
-        });
     }
 
     onMount(() => {
-        GetPixels()
-        contributors = data.data
-        
+        //contributors = data.data
+        //replace with hard coded data
+
+        let i = 0
+        pixels = pixelData
     })
 
 </script>
@@ -83,12 +60,13 @@
 {#if !hasAgreed}
     <div class="flex flex-col justify-center items-center h-screen w-screen">
         <div class="card w-1/6 mb-5">
-            By clicking the button below you agree to respect the contributions of others and to keep the art appropriate. Enjoy!
+            This app is no longer connected to the database in order to preserve the creation of the participants of Hack KU 2025. You can still use it as it was, but your changes will not save. 
         </div>
-        <div class="card w-1/6 mb-2">Please enter your name if you would like to be on the list of contributors:</div>
-        <input type="text" class="input w-1/6 mb-5" bind:value={userName}/>
+        <div class="card w-1/6 mb-5">
+            Contributors were able to input a name if they wanted to be included in the list, but many chose not to be. Thanks!
+        </div>
         <button onclick={() => agree()} class="btn preset-filled-primary-500">
-            I Agree
+            Enter
         </button>
     </div>
 {/if}
@@ -98,7 +76,6 @@
     </div>
 {/if}
 {#if isScreenLarge && hasAgreed}
-
     <div class="flex lg:flex-row">
         <div class="bg-surface-100-900 flex flex-row lg:flex-col h-screen w-[175px]">
             <div class="w-40 btn preset-filled-surface-500 z-10 m-1 self-center">
@@ -128,7 +105,7 @@
         </div>
         <div class="flex flex-col ml-10 overflow-y-scroll h-screen">
             <h1 class="card m-2 font-bold">Contributors: </h1>
-            {#each contributors as item}
+            {#each names.names as item}
                 <div class="card bg-surface-300-700 m-3 py-1 px-2">{item}</div>
             {/each}
         </div>

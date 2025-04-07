@@ -14,7 +14,7 @@
 	"devDependencies": {
 		"@skeletonlabs/skeleton": "^3.1.2",
 		"@skeletonlabs/skeleton-svelte": "^1.2.0",
-		"@sveltejs/adapter-vercel": "^5.6.3",
+		"@sveltejs/adapter-vercel": "^5.7.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
@@ -26,6 +26,7 @@
 	},
 	"dependencies": {
 		"@melloware/coloris": "^0.24.0",
+		"@rollup/plugin-json": "^6.1.0",
 		"mongodb": "^6.15.0",
 		"svelte-awesome-color-picker": "^4.0.1"
 	}
